@@ -108,7 +108,9 @@ const ARCPlayground = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8000/playground/episode', {
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
+const response = await fetch(`${API_BASE_URL}/playground/episode`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -134,7 +136,7 @@ const ARCPlayground = () => {
     } catch (error) {
       console.error(error);
       alert(
-        'Could not connect to the backend. Make sure FastAPI is running on http://localhost:8000.'
+        'Could not connect to the backend. Please try again.'
       );
     } finally {
       setLoading(false);
