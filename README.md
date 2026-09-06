@@ -1193,6 +1193,6 @@ See [`LICENSE`](LICENSE) for the complete license text.
 
 Before final submission, add the public deployment and repository URLs:
 
-- **Live Demo:** `YOUR_PUBLIC_DEMO_URL`
-- **Source Code:** `YOUR_PUBLIC_GITHUB_URL`
-- **Technical Blog / Report:** `YOUR_PUBLIC_REPORT_URL`
+- **Live Demo:** `https://bdh-inspired-recurrent-reasoning-lab-1.onrender.com`
+- **Source Code:** `https://github.com/sakthidilan2008-netizen/bdh-inspired-recurrent-reasoning-lab`
+- **Technical Blog / Report:** `https://github.com/sakthidilan2008-netizen/bdh-inspired-recurrent-reasoning-lab/blob/master/BDH_Inspired_Recurrent_Reasoning_Lab_Technical_Report.pdf`
