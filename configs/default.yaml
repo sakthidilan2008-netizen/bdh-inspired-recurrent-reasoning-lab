@@ -1,0 +1,73 @@
+# default.yaml — resolved defaults for all modules (ARCHITECTURE.md / MODEL_SPEC.md / MEMORY_SPEC.md / REASONING_SPEC.md)
+
+seed: 42
+telemetry_level: light   # {off, light, full}
+
+model:
+  neuron:
+    n_neurons: 512
+    d_in: 64
+    activation: relu        # {relu, relu2}
+    top_k: null             # null = no hard top-k masking
+    activation_clip: 10.0
+  connectivity:
+    topology: block_sparse  # {block_sparse, small_world, dense}
+    n_blocks: 8
+    block_size: 64
+  excitatory_inhibitory:
+    enabled: true
+    excitatory_ratio: 0.8
+  projections:
+    rank: 32                # low-rank in/out projections
+
+memory:
+  mode: simple_hebbian       # {baseline, simple_hebbian, fast_weight_associative, normalized_associative, interference_mitigated}
+  state_dim: 512
+  decay_init: 0.95           # λ, reparameterized via sigmoid, in [0,1)
+  plasticity_init: 0.1       # η, reparameterized via softplus
+  interference_mitigation:
+    orthogonalize_top_k: 8
+    gate_similarity_window: 16
+
+reasoning:
+  depth_mode: fixed          # {fixed, adaptive}
+  fixed_depth: 4
+  max_depth: 16
+  reread_memory_each_iter: true
+  recurrent_dropout: 0.0
+  gradient_clip_norm: 1.0
+  ponder_cost_weight: 0.01   # only used if depth_mode == adaptive
+
+decoder:
+  type: grid                # {grid, sequence}
+
+training:
+  optimizer: adamw
+  lr: 3.0e-4
+  lr_schedule: cosine_warmup
+  warmup_steps: 500
+  batch_size: 64
+  max_steps: 20000
+  early_stopping_patience: 10
+  curriculum:
+    enabled: true
+    anneal_steps: 10000
+  augmentation:
+    permutation: true
+    spatial: true
+    color_remap: true
+    noise_robustness: true
+
+failure_risk:
+  model_type: logistic       # {logistic, gbdt}
+  risk_thresholds:
+    warning: 0.4
+    high_risk: 0.7
+
+benchmark:
+  task_families: [A, B, C, D, E, F, G, H, I, J, K]
+  splits:
+    train_seed_range: [0, 100000]
+    val_seed_range: [100000, 110000]
+    test_seed_range: [110000, 120000]
+    ood_seed_range: [200000, 210000]

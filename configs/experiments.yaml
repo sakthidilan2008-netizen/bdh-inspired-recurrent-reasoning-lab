@@ -1,0 +1,65 @@
+# experiments.yaml — sweep definitions per EXPERIMENT_PROTOCOL.md
+
+profile: default   # {default, extended}
+
+seeds: [1, 2, 3]
+
+sweeps:
+
+  - name: threshold_discovery_nesting
+    task_family: H
+    axis: nesting_depth
+    values: [1, 2, 3, 4, 5, 6, 7, 8]
+    fixed:
+      memory.mode: simple_hebbian
+      reasoning.fixed_depth: 4
+
+  - name: threshold_discovery_sequence_length
+    task_family: G
+    axis: sequence_length
+    values: [2, 3, 4, 5, 6, 8, 10, 14, 20]
+    fixed:
+      memory.mode: simple_hebbian
+      reasoning.fixed_depth: 4
+
+  - name: memory_mode_comparison
+    task_family: K
+    axis: memory.mode
+    values: [simple_hebbian, interference_mitigated]
+    fixed:
+      reasoning.fixed_depth: 4
+      benchmark.difficulty: 5
+
+  - name: reasoning_depth_sweep
+    task_family: J
+    axis: reasoning.fixed_depth
+    values: [1, 2, 4, 8]
+    fixed:
+      memory.mode: simple_hebbian
+
+  - name: memory_size_sweep
+    task_family: K
+    axis: memory.state_dim
+    values: [128, 256, 512, 1024]
+    fixed:
+      reasoning.fixed_depth: 4
+      memory.mode: simple_hebbian
+
+  - name: demonstration_count_sweep
+    task_family: K
+    axis: demonstration_count
+    values: [1, 2, 3, 5, 8, 12]
+    fixed:
+      memory.mode: simple_hebbian
+      reasoning.fixed_depth: 4
+
+  - name: baseline_comparison
+    task_families: [C, H, J]
+    models: [mlp, rnn, gru, attention_baseline, fixed_memory_baseline, bdh_inspired, bdh_inspired_improved]
+    fixed:
+      benchmark.difficulty: 5
+
+extended_profile_overrides:
+  task_families: [A, B, C, D, E, F, G, H, I, J, K]
+  memory_modes: [baseline, simple_hebbian, fast_weight_associative, normalized_associative, interference_mitigated]
+  seeds: [1, 2, 3, 4, 5]

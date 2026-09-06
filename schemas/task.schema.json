@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Task",
+  "type": "object",
+  "required": ["task_id", "family", "difficulty", "split", "seed", "demonstrations", "query", "metadata"],
+  "properties": {
+    "task_id": { "type": "string" },
+    "family": {
+      "type": "string",
+      "enum": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
+    },
+    "difficulty": {
+      "type": "object",
+      "properties": {
+        "grid_size": { "type": "array", "items": { "type": "integer" }, "minItems": 2, "maxItems": 2 },
+        "n_colors": { "type": "integer" },
+        "n_demonstrations": { "type": "integer" },
+        "nesting_depth": { "type": "integer" },
+        "sequence_length": { "type": "integer" },
+        "noise_level": { "type": "number" }
+      }
+    },
+    "split": {
+      "type": "string",
+      "enum": ["train", "validation", "held_out_test", "ood_test"]
+    },
+    "seed": { "type": "integer" },
+    "demonstrations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "input_grid": { "type": "array" },
+          "output_grid": { "type": "array" }
+        },
+        "required": ["input_grid", "output_grid"]
+      }
+    },
+    "query": {
+      "type": "object",
+      "properties": {
+        "input_grid": { "type": "array" }
+      },
+      "required": ["input_grid"]
+    },
+    "target": {
+      "type": ["array", "null"],
+      "description": "ground truth output grid; null/omitted when serving to inference-only clients on held_out_test/ood_test to prevent leakage"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "generator_version": { "type": "string" },
+        "concept_labels": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

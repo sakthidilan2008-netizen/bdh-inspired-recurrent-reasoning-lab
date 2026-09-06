@@ -1,0 +1,80 @@
+[
+  {
+    "experiment_id": "98806c80",
+    "timestamp": "2026-09-05T22:03:59.830985",
+    "task_id": "task_ColorTransformation_2ec27c45",
+    "family": "ColorTransformation",
+    "seed": 42,
+    "best_candidate_type": "TranslationTransformation",
+    "best_candidate_score": 0.9333333333333333,
+    "metrics": {
+      "exact_match": 0.0,
+      "cell_accuracy": 0.9200000166893005
+    }
+  },
+  {
+    "experiment_id": "98806c80",
+    "timestamp": "2026-09-05T22:03:59.833015",
+    "task_id": "task_ColorTransformation_6825b413",
+    "family": "ColorTransformation",
+    "seed": 43,
+    "best_candidate_type": "TranslationTransformation",
+    "best_candidate_score": 0.88,
+    "metrics": {
+      "exact_match": 0.0,
+      "cell_accuracy": 0.9200000166893005
+    }
+  },
+  {
+    "experiment_id": "98806c80",
+    "timestamp": "2026-09-05T22:03:59.834860",
+    "task_id": "task_ColorTransformation_961abac9",
+    "family": "ColorTransformation",
+    "seed": 44,
+    "best_candidate_type": "ColorSwapTransformation",
+    "best_candidate_score": 1.0,
+    "metrics": {
+      "exact_match": 1.0,
+      "cell_accuracy": 1.0
+    }
+  },
+  {
+    "experiment_id": "98806c80",
+    "timestamp": "2026-09-05T22:03:59.837552",
+    "task_id": "task_Translation_27f2af9d",
+    "family": "Translation",
+    "seed": 42,
+    "best_candidate_type": "TranslationTransformation",
+    "best_candidate_score": 1.0,
+    "metrics": {
+      "exact_match": 1.0,
+      "cell_accuracy": 1.0
+    }
+  },
+  {
+    "experiment_id": "98806c80",
+    "timestamp": "2026-09-05T22:03:59.839702",
+    "task_id": "task_Translation_b54ca64c",
+    "family": "Translation",
+    "seed": 43,
+    "best_candidate_type": "TranslationTransformation",
+    "best_candidate_score": 1.0,
+    "metrics": {
+      "exact_match": 1.0,
+      "cell_accuracy": 1.0
+    }
+  },
+  {
+    "experiment_id": "98806c80",
+    "timestamp": "2026-09-05T22:03:59.841582",
+    "task_id": "task_Translation_830c063c",
+    "family": "Translation",
+    "seed": 44,
+    "best_candidate_type": "TranslationTransformation",
+    "best_candidate_score": 1.0,
+    "metrics": {
+      "exact_match": 1.0,
+      "cell_accuracy": 1.0
+    }
+  }
+]

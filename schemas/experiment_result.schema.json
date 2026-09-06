@@ -1,0 +1,88 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ExperimentResult",
+  "type": "object",
+  "required": [
+    "experiment_id", "timestamp", "version", "seed", "configuration",
+    "model_parameters", "dataset_generation_parameters", "metrics",
+    "failure_statistics", "latency", "memory_usage"
+  ],
+  "properties": {
+    "experiment_id": { "type": "string", "format": "uuid" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "version": { "type": "string", "description": "git commit hash or content hash of backend/" },
+    "seed": { "type": "integer" },
+    "configuration": { "type": "object", "description": "fully resolved config, post-defaults-merge" },
+    "model_parameters": {
+      "type": "object",
+      "properties": {
+        "param_count": { "type": "integer" },
+        "checkpoint_ref": { "type": ["string", "null"] }
+      },
+      "required": ["param_count"]
+    },
+    "dataset_generation_parameters": {
+      "type": "object",
+      "properties": {
+        "task_families": { "type": "array", "items": { "type": "string" } },
+        "difficulty": { "type": "object" },
+        "split_seed_ranges": { "type": "object" }
+      },
+      "required": ["task_families", "split_seed_ranges"]
+    },
+    "metrics": {
+      "type": "object",
+      "properties": {
+        "train": { "$ref": "#/definitions/metricBundle" },
+        "validation": { "$ref": "#/definitions/metricBundle" },
+        "held_out_test": { "$ref": "#/definitions/metricBundle" },
+        "ood_test": { "$ref": "#/definitions/metricBundle" }
+      }
+    },
+    "failure_statistics": {
+      "type": "object",
+      "properties": {
+        "error_type_counts": { "type": "object", "additionalProperties": { "type": "integer" } },
+        "failure_threshold_estimate": {
+          "type": ["object", "null"],
+          "properties": {
+            "axis": { "type": "string" },
+            "value": { "type": "number" },
+            "std": { "type": "number" }
+          }
+        },
+        "mitigation_attempted": { "type": ["string", "null"] },
+        "improvement_delta": { "type": ["number", "null"] }
+      }
+    },
+    "latency": {
+      "type": "object",
+      "properties": {
+        "per_sample_ms": { "type": "number" },
+        "per_batch_ms": { "type": "number" }
+      }
+    },
+    "memory_usage": {
+      "type": "object",
+      "properties": {
+        "peak_mb": { "type": "number" },
+        "avg_mb": { "type": "number" }
+      }
+    },
+    "result_ref": { "type": "string", "description": "path to the stored raw results file" }
+  },
+  "definitions": {
+    "metricBundle": {
+      "type": "object",
+      "properties": {
+        "exact_grid_accuracy": { "type": "number" },
+        "cell_accuracy": { "type": "number" },
+        "task_level_accuracy": { "type": "number" },
+        "transformation_accuracy": { "type": "number" },
+        "structural_accuracy": { "type": "number" },
+        "calibration_ece": { "type": "number" },
+        "robustness_accuracy": { "type": "number" }
+      }
+    }
+  }
+}

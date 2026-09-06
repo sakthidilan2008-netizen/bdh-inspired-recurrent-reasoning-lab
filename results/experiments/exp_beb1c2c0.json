@@ -1,0 +1,12 @@
+[
+  {
+    "experiment_id": "beb1c2c0",
+    "timestamp": "2026-09-05T22:01:14.254882",
+    "task_id": "task_ColorTransformation_c103dbe6",
+    "family": "ColorTransformation",
+    "metrics": {
+      "exact_match": 1.0,
+      "cell_accuracy": 1.0
+    }
+  }
+]

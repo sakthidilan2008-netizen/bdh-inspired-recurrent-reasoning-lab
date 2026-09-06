@@ -1,0 +1,69 @@
+import torch
+import torch.nn as nn
+from typing import List, Dict, Any, Tuple
+from backend.engine.base import MemoryModule, MemoryState, ReasoningEngine, ReasoningConfig
+from backend.schemas import Task, Demonstration
+
+class ModelEngine(nn.Module):
+    def __init__(
+        self,
+        d_in: int,
+        d_model: int,
+        n_neurons: int,
+        memory_module: MemoryModule,
+        reasoning_engine: ReasoningEngine,
+        # Will add decoder/hypothesis engine here later
+    ):
+        super().__init__()
+        self.d_in = d_in
+        self.d_model = d_model
+        self.n_neurons = n_neurons
+        
+        self.memory = memory_module
+        self.reasoner = reasoning_engine
+        
+        # Stub for input embedding/encoding
+        self.encoder_linear = nn.Linear(d_in, d_model)
+        
+    def encode(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        Stub: Encodes raw input features (pixel/object) into dense embedding e_t.
+        x: [B, seq_len, d_in] or [B, d_in]
+        """
+        assert x.size(-1) == self.d_in, f"Expected last dim {self.d_in}, got {x.size(-1)}"
+        return self.encoder_linear(x)
+        
+    def forward(
+        self,
+        query: torch.Tensor,
+        demonstrations: List[Tuple[torch.Tensor, torch.Tensor]],
+        reasoning_cfg: ReasoningConfig
+    ):
+        """
+        Main forward pass:
+        1. Ingest demonstrations into memory.
+        2. Encode query.
+        3. Run reasoning loop.
+        4. (Later: verify candidate transformations and decode)
+        """
+        B = query.size(0)
+        
+        # 1. Reset memory
+        mem_state = self.memory.reset(B)
+        
+        # 2. Ingest demonstrations
+        for dem_in, dem_out in demonstrations:
+            # Stubs for now
+            e_in = self.encode(dem_in)
+            e_out = self.encode(dem_out)
+            
+            # Write to memory (x_t, y_t pair equivalent)
+            mem_state = self.memory.write(mem_state, e_in, e_out)
+            
+        # 3. Process query
+        e_q = self.encode(query)
+        
+        # 4. Reason
+        trace = self.reasoner(e_q, mem_state, reasoning_cfg)
+        
+        return trace, mem_state
