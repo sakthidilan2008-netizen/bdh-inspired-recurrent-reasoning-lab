@@ -192,12 +192,11 @@ class BoundaryPropagationGenerator(TaskGenerator):
                 seeds.append(("vertical", row, col))
 
         if pattern_type in ("horizontal", "mixed"):
-            # Select one or two rows and place seeds
-            # on the left or right boundary.
             n_horizontal = rng.randint(1, 2)
 
             for _ in range(n_horizontal):
-                row = rng.randint(0, h - 1)
+        # Avoid corners so boundary orientation is unambiguous.
+                row = rng.randint(1, h - 2)
                 col = rng.choice([0, w - 1])
 
                 grid[row, col] = color

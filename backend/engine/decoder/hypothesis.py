@@ -87,7 +87,7 @@ class BoundaryPropagationTransformation(Transformation):
                 out[:, c] = original[h - 1, c]
 
         # Detect ORIGINAL left/right seeds.
-        for r in range(h):
+        for r in range(1, h - 1):
             if int(original[r, 0].item()) != 0:
                 out[r, :] = original[r, 0]
 
